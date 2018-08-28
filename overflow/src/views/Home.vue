@@ -8,6 +8,7 @@
           <footer>
             <small>
               <em>&mdash;John Johnson</em>
+              <br>
             </small>
           </footer>
         </blockquote>

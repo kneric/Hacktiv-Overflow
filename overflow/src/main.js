@@ -6,12 +6,6 @@ import store from './store'
 import axios from 'axios'
 import swal from 'sweetalert'
 import wysiwyg from 'vue-wysiwyg'
-import {library} from '@fortawesome/fontawesome-svg-core'
-import {faAngry, faGrinBeam} from '@fortawesome/free-solid-svg-icons'
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
-
-library.add(faAngry, faGrinBeam)
-Vue.component('fa-icon', FontAwesomeIcon)
 
 Vue.use(wysiwyg, {
   hideModules: {
