@@ -1,10 +1,9 @@
 <template>
   <v-app>
-    <v-toolbar> 
-    </v-toolbar>
+    <Toolbar/>
     <v-content>
-      <Toolbar :token="token"/>
-      <router-view/>
+    <h1>{{token}}</h1>
+    <router-view/>
     </v-content>
     <v-footer app class="teal accent-2">
       <v-layout
@@ -22,23 +21,8 @@ import Toolbar from './components/Toolbar'
 
 export default {
   name: 'App',
-  data () {
-    return {
-      token: null
-    }
-  },
   components : {
     Toolbar
   },
-  methods: {
-    loginCheck (){
-      if (localStorage.getItem('token')){
-        this.token = localStorage.getItem('token')
-      }
-    }
-  },
-  mounted () {
-    this.loginCheck()
-  }
 }
 </script>
