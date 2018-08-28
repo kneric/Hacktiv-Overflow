@@ -5,8 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    token: 'a',
-    tes: 'TES'
+    token: null,
   },
   mutations: {
     addToken (state, payload) {
@@ -14,7 +13,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    addToken ({commit}){
+    checkToken ({commit}){
       if (localStorage.getItem('token')){
         commit('addToken',localStorage.getItem('token'))
       }

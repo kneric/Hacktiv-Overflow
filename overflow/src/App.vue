@@ -1,8 +1,7 @@
 <template>
   <v-app>
-    <Toolbar/>
+    <Toolbar :token="token"/>
     <v-content>
-    <h1>{{token}}</h1>
     <router-view/>
     </v-content>
     <v-footer app class="teal accent-2">
@@ -18,11 +17,26 @@
 
 <script>
 import Toolbar from './components/Toolbar'
+import { mapState } from 'vuex';
+import { mapActions } from 'vuex'
 
 export default {
   name: 'App',
   components : {
     Toolbar
   },
+  computed: {
+    ...mapState([
+      'token'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'checkToken'
+    ])
+  },
+  mounted (){
+    this.checkToken ()
+  }
 }
 </script>

@@ -20,30 +20,15 @@
       <v-btn flat>Logout</v-btn>
     </div>
     <v-spacer />
-    {{ tes }}
     <v-spacer/>
-    {{token}}
   </v-toolbar>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import { mapActions } from 'vuex'
 
 export default {
-  computed: {
-    ...mapState([
-      'token',
-      'tes'
-    ])
-  },
-  methods: {
-    ...mapActions([
-      'addToken',
-    ])
-  },
-  mounted (){
-    this.addToken ()
-  }
+  props:[
+    'token'
+  ]
 }
 </script>
