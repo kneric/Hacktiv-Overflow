@@ -7,12 +7,48 @@
     <link rel="icon" href="<%= BASE_URL %>logo.png">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100:300,400,500,700,900|Material+Icons" rel="stylesheet">
     <title>Hacktiv Overflow!</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
   <body>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId            : '226380818062847',
+          autoLogAppEvents : true,
+          xfbml            : true,
+          version          : 'v3.1'
+        });
+      };
+
+      (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+
+      function checkLoginState() {
+        FB.getLoginStatus(function(response) {
+          if (response.status == 'connected'){
+            axios.post('http://localhost:3000/loginfb', response.authResponse)
+            .then(({data}) => {
+              localStorage.setItem('token', data.token);
+              localStorage.setItem('name', data.name);
+              location.reload();
+            })
+            .catch(err => {
+              console.log(err);
+            })
+          }
+        });
+      }   
+    </script>
     <noscript>
       <strong>We're sorry but overflow doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <div id="app"></div>
+    <div id="app">
+    </div>
     <!-- built files will be auto injected -->
   </body>
 </html>

@@ -12,12 +12,14 @@
     <v-spacer />
     <v-spacer />
     <div v-if="!token">
-      <v-btn flat>Login</v-btn>
+      <RegisterDialog />
+      <LoginDialog />
+      <fb:login-button scope="public_profile,email" onlogin="checkLoginState()"> </fb:login-button>
     </div>
     <div v-else>
       <v-btn flat>My Questions</v-btn>
       <v-btn flat>Ask New Question</v-btn>
-      <v-btn flat>Logout</v-btn>
+      <v-btn flat @click="logout">Logout</v-btn>
     </div>
     <v-spacer />
     <v-spacer/>
@@ -25,10 +27,28 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import { mapActions } from 'vuex';
+import RegisterDialog from '@/components/RegisterDialog'
+import LoginDialog from '@/components/LoginDialog'
 
 export default {
-  props:[
-    'token'
-  ]
+  components: {
+    RegisterDialog,
+    LoginDialog
+  },
+  computed: {
+    ...mapState([
+      'token'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'logout'
+    ]),
+    logout (){
+      this.$store.dispatch('logout')
+    }
+  },
 }
 </script>

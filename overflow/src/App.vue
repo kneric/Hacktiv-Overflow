@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Toolbar :token="token"/>
+    <Toolbar/>
     <v-content>
     <router-view/>
     </v-content>
@@ -36,7 +36,7 @@ export default {
     ])
   },
   mounted (){
-    this.checkToken ()
+    this.$store.dispatch('checkToken')
   }
 }
 </script>

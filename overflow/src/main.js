@@ -15,7 +15,7 @@ Vue.use(wysiwyg, {
 
 Vue.prototype.$axios = axios.create(
   {
-    baseURL: 'http://35.240.195.13'
+    baseURL: 'http://localhost:3000'
   }
 )
 Vue.prototype.$swal = swal;
