@@ -1,6 +1,8 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
+const nodemailer = require('nodemailer');
+let aws = require('aws-sdk');
 
 const signup = (req, res) => {
   const { name, email, password} = req.body;
@@ -19,7 +21,41 @@ const signup = (req, res) => {
           email: newUser.email
         }, process.env.secretKey)
 
-        res.status(201).json({token, name: newUser.name})
+        const transporter = nodemailer.createTransport({
+          host: 'smtp.ethereal.email',
+          port: 587,
+          auth: {
+              user: 'fuasrb4x2gr7dxk7@ethereal.email',
+              pass: 'A2Eue17JWx4uVFhGyn'
+          },
+          tls: {
+            rejectUnauthorized: false
+          }
+        });
+    
+        // setup email data with unicode symbols
+        let mailOptions = {
+          from: '"Hacktiv Overflow 👻" <helper@h.overflow.com>', // sender address
+          to: `${email}`, // list of receivers
+          subject: 'Your Registration Complete', // Subject line
+          text: 'Hello world?', // plain text body
+          html: `
+            <h2>Registration info:</h2>
+            <p>Name:${name}</p>
+            <p>Email:${email}</p>
+            <p>Login to your account:</p>
+            <p><a href="http://localhost:3000/">Continue</a></p>
+          `
+        };
+    
+        // send mail with defined transport object
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+              return console.log(error);
+          }
+          res.status(201).json({token, name: newUser.name, url: nodemailer.getTestMessageUrl(info)})
+        });
+
       })
     } else {
       res.status(400).json({message: 'email already used'})

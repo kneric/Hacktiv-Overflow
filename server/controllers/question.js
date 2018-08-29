@@ -16,6 +16,16 @@ const addQuestion = (req, res) => {
   })
 }
 
+const allQuestions = (req, res) => {
+  Question.find({})
+  .then(allQ => {
+    res.status(200).json(allQ)
+  })
+  .catch(err => {
+    res.status(500).json(err)
+  })
+}
+
 
 module.exports = {
   addQuestion
