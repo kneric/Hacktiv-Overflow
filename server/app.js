@@ -1,5 +1,6 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 var createError = require('http-errors');
 var express = require('express');
@@ -10,7 +11,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 const questionRouter = require('./routes/question');
 
-mongoose.connect(DB_URL, {useNewUrlParser: true})
+mongoose.connect(process.env.DB_URL, {useNewUrlParser: true})
 .then(() => {
   console.log(`connected to db`);
 })
@@ -24,6 +25,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(cors())
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
