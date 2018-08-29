@@ -17,7 +17,6 @@
 
 <script>
 import Toolbar from './components/Toolbar'
-import { mapState } from 'vuex';
 import { mapActions } from 'vuex'
 
 export default {
@@ -25,18 +24,13 @@ export default {
   components : {
     Toolbar
   },
-  computed: {
-    ...mapState([
-      'token'
-    ])
-  },
   methods: {
     ...mapActions([
-      'checkToken'
+      'checkUser'
     ])
   },
   mounted (){
-    this.$store.dispatch('checkToken')
+    this.$store.dispatch('checkUser')
   }
 }
 </script>

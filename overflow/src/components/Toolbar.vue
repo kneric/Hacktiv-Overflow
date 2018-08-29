@@ -10,15 +10,14 @@
     <v-text-field flat label="Search"></v-text-field>
     <v-btn flat icon><v-icon>search</v-icon></v-btn>
     <v-spacer />
-    <v-spacer />
     <div v-if="!token">
       <RegisterDialog />
       <LoginDialog />
       <fb:login-button scope="public_profile,email" onlogin="checkLoginState()"> </fb:login-button>
     </div>
     <div v-else>
-      <v-btn flat>My Questions</v-btn>
-      <v-btn flat>Ask New Question</v-btn>
+      <v-btn flat>{{name}}<small>&nbsp; 's </small> &nbsp; Question</v-btn>
+      <v-btn flat @click="ask">Ask New Question</v-btn>
       <v-btn flat @click="logout">Logout</v-btn>
     </div>
     <v-spacer />
@@ -39,7 +38,8 @@ export default {
   },
   computed: {
     ...mapState([
-      'token'
+      'token',
+      'name'
     ])
   },
   methods: {
@@ -48,6 +48,10 @@ export default {
     ]),
     logout (){
       this.$store.dispatch('logout')
+      location.reload()
+    },
+    ask (){
+      this.$router.replace('/ask')
     }
   },
 }

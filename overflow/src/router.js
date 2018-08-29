@@ -11,5 +11,10 @@ export default new Router({
       name: 'home',
       component: Home
     },
+    {
+      path: '/ask',
+      name: 'ask',
+      component: () => import('./views/AskQuestion.vue'),
+    },
   ]
 })

@@ -12,6 +12,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     token: null,
+    name: null
   },
   mutations: {
     addToken (state, payload) {
@@ -19,12 +20,19 @@ export default new Vuex.Store({
     },
     removeToken (state) {
       state.token = null
-    }
+    },
+    addName (state, payload){
+      state.name = payload
+    },
+    removeName (state) {
+      state.name = null
+    },
   },
   actions: {
-    checkToken ({commit}){
+    checkUser ({commit}){
       if (localStorage.getItem('token')){
         commit('addToken',localStorage.getItem('token'))
+        commit('addName',localStorage.getItem('name'))
       }
     },
     register ({commit}, payload){
@@ -36,7 +44,8 @@ export default new Vuex.Store({
         .then(({data}) => {
           localStorage.setItem('token', data.token);
           localStorage.setItem('name', data.name);
-          commit('addToken',localStorage.getItem('token'))
+          commit('addToken',data.token)
+          commit('addName',data.name)
         })
         .catch(err =>{
           let messages = []
@@ -59,13 +68,10 @@ export default new Vuex.Store({
         .then(({data}) => {
           localStorage.setItem('token', data.token);
           localStorage.setItem('name', data.name);
-          commit('addToken',localStorage.getItem('token'))
+          commit('addToken',data.token)
+          commit('addName',data.name)
         })
         .catch(err =>{
-          let messages = []
-            for (let i in err.response.data.errors) {
-              messages.push((err.response.data.errors[i].message))
-            }
           swal(
             err.response.data.message,
             '',
@@ -77,6 +83,7 @@ export default new Vuex.Store({
       localStorage.removeItem('token');
       localStorage.removeItem('name');
       commit('removeToken')
+      commit('removeName')
       swal(
         'You are now logged out!',
         '',

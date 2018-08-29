@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'checkToken',
+      'checkUser',
       'register',
     ]),
     register (){
