@@ -48,7 +48,7 @@ export default {
     ]),
     logout (){
       this.$store.dispatch('logout')
-      location.reload()
+      setTimeout(function (){location.reload()}, 2000);
     },
     ask (){
       this.$router.replace('/ask')

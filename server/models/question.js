@@ -12,21 +12,17 @@ const QuestionSchema = new Schema ({
     required: [true, 'input your question']
   },
   desc: String,
-  upCounter: {
-    type: Number,
-  },
-  downCounter: {
-    type: Number,
-  },
   upVoters: [{
     type: Schema.Types.ObjectId,
     ref: 'User',
-    default: undefined
   }],
   downVoters: [{
     type: Schema.Types.ObjectId,
     ref: 'User',
-    default: undefined
+  }],
+  answers: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Answer',
   }]
 }, {timestamps:true})
 

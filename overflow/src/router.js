@@ -9,7 +9,15 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      children: [
+        {
+          path: 'question/:id',
+          name: 'questiondetail',
+          component: () => import('./views/QuestionDetail.vue'),
+          props: true
+        },
+      ]
     },
     {
       path: '/ask',

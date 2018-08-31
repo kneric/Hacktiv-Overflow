@@ -4,7 +4,7 @@ import axios from 'axios'
 import swal from 'sweetalert'
 
 const xAxios = axios.create({
-  baseURL: 'http://localhost:3000'
+  baseURL: 'http://35.240.195.13'
 })
 
 Vue.use(Vuex)
@@ -12,7 +12,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     token: null,
-    name: null
+    name: null,
+    allQs: []
   },
   mutations: {
     addToken (state, payload) {
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     removeName (state) {
       state.name = null
     },
+    setAllQ (state, payload){
+      state.allQs = payload
+    }
   },
   actions: {
     checkUser ({commit}){
@@ -42,10 +46,17 @@ export default new Vuex.Store({
         data: payload
       })
         .then(({data}) => {
-          localStorage.setItem('token', data.token);
-          localStorage.setItem('name', data.name);
-          commit('addToken',data.token)
-          commit('addName',data.name)
+          // localStorage.setItem('token', data.token);
+          // localStorage.setItem('name', data.name);
+          // commit('addToken',data.token)
+          // commit('addName',data.name)
+          console.log(data.url);
+          window.open(`"${data.url}"`)
+          swal(
+            'You are now registered!',
+            'Please login to continue',
+            'success'
+          )
         })
         .catch(err =>{
           let messages = []
@@ -89,6 +100,18 @@ export default new Vuex.Store({
         '',
         'success'
       )
+    },
+    getAllQs ({commit}){
+      xAxios({
+        method: 'get',
+        url: '/question'
+      })
+        .then(({data}) => {
+          commit('setAllQ', data)
+        })
+        .catch(err => {
+          console.log(err);
+        })
     }
   }
 })

@@ -3,11 +3,12 @@ const router = express.Router();
 const auth = require('../middlewares/auth');
 const {
   addQuestion,
+  allQuestions
   
 } = require('../controllers/question');
 
 router
   .post('/ask', auth, addQuestion)
-  .get('/')
+  .get('/', allQuestions)
 
 module.exports = router;

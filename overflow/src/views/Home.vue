@@ -1,36 +1,54 @@
 <template>
-  <v-container fluid>
-    <v-slide-y-transition mode="out-in">
-      <v-layout column align-center>
-        <img src="@/assets/logo.png" alt="Vuetify.js" class="mb-5">
-        <blockquote>
-          &#8220;First, solve the problem. Then, write the code.&#8221;
-          <footer>
-            <small>
-              <em>&mdash;John Johnson</em>
-              <br>
-            </small>
-          </footer>
-        </blockquote>
-      </v-layout>
-    </v-slide-y-transition>
+  <v-container fluid grid-list-md text-xs-center>
+    <h3>Select the question on the left</h3>
+    <v-layout row v-for="(Q, index) in allQs" :key="index">
+      <v-flex xs4 sm4 md4 >
+        <v-card dark color="teal">
+          <v-card-title primary-title>
+            <div>
+              <h3 class="headline mb-0">{{Q.title}}</h3>
+            </div>
+          </v-card-title>
+          <v-card-actions>
+            {{Q.answers.length}} Answer(s) &nbsp;
+            <v-icon>thumb_up</v-icon> &nbsp;
+            {{Q.upVoters.length}} &nbsp; &nbsp;
+            <v-icon>thumb_down</v-icon> &nbsp;
+            {{Q.downVoters.length}} &nbsp; &nbsp;
+            <v-spacer />
+
+            <v-spacer />
+            <router-link :to="{ name: 'questiondetail', params: { id: Q._id } }"><v-btn class="teal--text" color="white">More..</v-btn></router-link>
+          </v-card-actions>
+        </v-card>
+      </v-flex>
+    </v-layout>
+    <v-layout row>
+      <v-flex xs8 sm8 md8>
+        <router-view></router-view>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
+<script>
+import {mapState} from 'vuex';
+import {mapActions} from 'vuex';
+
+export default {
+  name: 'allQ',
+  computed: {
+    ...mapState([
+      'allQs'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'getAllQs'
+    ]),
+  },
+  mounted (){
+    this.$store.dispatch('getAllQs')
+  } 
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
+</script>

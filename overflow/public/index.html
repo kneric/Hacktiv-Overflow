@@ -31,7 +31,7 @@
       function checkLoginState() {
         FB.getLoginStatus(function(response) {
           if (response.status == 'connected'){
-            axios.post('http://localhost:3000/loginfb', response.authResponse)
+            axios.post('http://35.240.195.13/loginfb', response.authResponse)
             .then(({data}) => {
               localStorage.setItem('token', data.token);
               localStorage.setItem('name', data.name);

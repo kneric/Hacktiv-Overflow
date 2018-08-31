@@ -28,5 +28,6 @@ const allQuestions = (req, res) => {
 
 
 module.exports = {
-  addQuestion
+  addQuestion,
+  allQuestions
 };
